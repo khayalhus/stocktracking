@@ -40,14 +40,66 @@ void read_file () {
 		fscanf(stock.tracker, " %d", &k);
 		if(feof(stock.tracker)) break;
 		if(k == 0) {
-			//current_stock();
+			stock.current_stock();
 		} else if (k > 0) {
-			//add_stock(k);
+			stock.add_stock(k);
 		} else {
-			//sell(-k);
+			//stock.sell(-k);
 		}
 	}
 	fclose(stock.tracker);
+}
+
+void list::add_stock(int size){	
+	if(head){
+		node *traverse, *tail;
+		tail = NULL;
+		traverse = head;
+		while(traverse){
+			if (traverse->size == size) {
+				traverse->quant++;
+				return;
+			} else if (traverse->size > size) {
+				node *newnode = new node;
+				newnode->size = size;
+				newnode->quant = 1;
+				if(tail) {
+					tail->next = newnode;
+				} else {
+					head = newnode;
+				}
+				newnode->next = traverse;
+				nodecount++;
+				return;
+			}
+			tail = traverse;
+			traverse = traverse->next;
+		}
+		node *newnode = new node;
+		newnode->size = size;
+		newnode->quant = 1;
+		newnode->next = NULL;
+		tail->next = newnode;
+		nodecount++;
+	} else {
+		node* newnode = new node;
+		newnode->size = size;
+		newnode->quant = 1;
+		newnode->next = NULL;
+		head = newnode;
+		nodecount++;
+	}
+}
+
+void list::current_stock(){
+	if(head){
+		node *traverse;
+		traverse = head;
+		while(traverse) {
+			cout << traverse->size << ":" << traverse->quant << endl;
+			traverse = traverse->next;
+		}
+	}
 }
 
 void list::clear(){
