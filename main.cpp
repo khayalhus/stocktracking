@@ -38,13 +38,12 @@ void read_file () {
 	fseek(stock.tracker, 0, SEEK_SET);
 	while (!feof(stock.tracker)) {
 		fscanf(stock.tracker, " %d", &k);
-		if(feof(stock.tracker)) break;
 		if(k == 0) {
 			stock.current_stock();
 		} else if (k > 0) {
 			stock.add_stock(k);
 		} else {
-			//stock.sell(-k);
+			stock.sell(-k);
 		}
 	}
 	fclose(stock.tracker);
@@ -100,6 +99,35 @@ void list::current_stock(){
 			traverse = traverse->next;
 		}
 	}
+}
+
+void list::sell(int size){
+	if(head){
+		node *traverse, *tail;
+		traverse = head;
+		tail = NULL;
+		while(traverse) {
+			if(traverse->size == size){
+				if (traverse->quant == 1) {
+					if (tail) {
+						tail->next = traverse->next;
+						delete traverse;
+						return;
+					} else {
+						head = traverse->next;
+						delete traverse;
+						return;
+					}
+				} else {
+					traverse->quant -= 1;
+					return;
+				}
+			}
+			tail = traverse;
+			traverse = traverse->next;
+		}
+	}
+	cout << "NO_STOCK" << endl;
 }
 
 void list::clear(){
