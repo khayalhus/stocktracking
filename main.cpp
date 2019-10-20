@@ -1,18 +1,18 @@
-#include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
+#include <iostream> // needed for input and output operations
+#include <stdlib.h> // needed for EXIT_SUCCESS and EXIT_FAILURE macros
+#include <stdio.h> // needed for file operation functions
 
-#include "list.h"
+#include "list.h" // includes List struct
 
 using namespace std;
 
-list stock;
+list stock; //create a Linked List called stock
 
 int main () {
-	stock.create();
-	stock.open_file();
-	stock.read_file();
-	stock.clear();
+	stock.create(); // initialize some variables
+	stock.open_file(); // opens file
+	stock.read_file(); // reads and closes file
+	stock.clear(); // deletes all of the nodes of the list
 	return EXIT_SUCCESS;
 }
 
@@ -31,7 +31,6 @@ void list::open_file () {
 
 void list::read_file () {
 	int k;
-	fseek(tracker, 0, SEEK_SET);
 	while (!feof(tracker)) {
 		fscanf(tracker, " %d", &k);
 		if(k == 0) {
@@ -52,16 +51,16 @@ void list::add_stock(int size){
 		traverse = head;
 		while(traverse){
 			if (traverse->size == size) {
-				traverse->quant++;
+				traverse->quant++; // increase quantity by 1 of a shoe that is already in stock
 				return;
 			} else if (traverse->size > size) {
-				node *newnode = new node;
+				node *newnode = new node; // add a node for a shoe that is not available in stock
 				newnode->size = size;
 				newnode->quant = 1;
 				if(tail) {
-					tail->next = newnode;
+					tail->next = newnode; // if tail points to something, make it point to recently inserted node
 				} else {
-					head = newnode;
+					head = newnode; // if tail is NULL, then this node is the smallest shoe size
 				}
 				newnode->next = traverse;
 				nodecount++;
@@ -70,14 +69,14 @@ void list::add_stock(int size){
 			tail = traverse;
 			traverse = traverse->next;
 		}
-		node *newnode = new node;
+		node *newnode = new node; // add a node at the end of the list, if the shoe size is the biggest in stock
 		newnode->size = size;
 		newnode->quant = 1;
 		newnode->next = NULL;
 		tail->next = newnode;
 		nodecount++;
 	} else {
-		node* newnode = new node;
+		node* newnode = new node; // add the first node as the head node
 		newnode->size = size;
 		newnode->quant = 1;
 		newnode->next = NULL;
@@ -104,18 +103,18 @@ void list::sell(int size){
 		tail = NULL;
 		while(traverse) {
 			if(traverse->size == size){
-				if (traverse->quant == 1) {
+				if (traverse->quant == 1) { // delete node if the sold shoe was the last one left
 					if (tail) {
-						tail->next = traverse->next;
+						tail->next = traverse->next; // link the previous node with the next node
 						delete traverse;
 						return;
 					} else {
-						head = traverse->next;
+						head = traverse->next; // make the second node the head if the deleted node is head node
 						delete traverse;
 						return;
 					}
 				} else {
-					traverse->quant -= 1;
+					traverse->quant -= 1; // decrease by 1 if stock has more than one pair of the shoe
 					return;
 				}
 			}
@@ -123,7 +122,7 @@ void list::sell(int size){
 			traverse = traverse->next;
 		}
 	}
-	cout << "NO_STOCK" << endl;
+	cout << "NO_STOCK" << endl; // print NO_STOCK if function did not terminate before this line
 }
 
 void list::clear(){
