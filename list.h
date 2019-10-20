@@ -8,8 +8,10 @@ struct list{
 	FILE *tracker;
 	int nodecount;
 	void create();
-	void add_stock(int);
-	void sell(int);
+	void add_stock(int size);
+	void sell(int size);
 	void current_stock();
 	void clear();
+	void open_file();
+	void read_file();
 };
