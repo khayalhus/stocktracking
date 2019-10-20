@@ -8,14 +8,10 @@ using namespace std;
 
 list stock;
 
-void open_file();
-void read_file();
-void search_stock();
-
 int main () {
 	stock.create();
-	open_file();
-	read_file();
+	stock.open_file();
+	stock.read_file();
 	stock.clear();
 	return EXIT_SUCCESS;
 }
@@ -25,28 +21,28 @@ void list::create() {
 	nodecount = 0;
 }
 
-void open_file () {
-	stock.tracker = fopen("input.txt", "r+");
-	if(!stock.tracker){
+void list::open_file () {
+	tracker = fopen("input.txt", "r+");
+	if(!tracker){
 		cerr << "Error: Unable to read file" << endl;
 		exit(EXIT_FAILURE);
 	}
 }
 
-void read_file () {
+void list::read_file () {
 	int k;
-	fseek(stock.tracker, 0, SEEK_SET);
-	while (!feof(stock.tracker)) {
-		fscanf(stock.tracker, " %d", &k);
+	fseek(tracker, 0, SEEK_SET);
+	while (!feof(tracker)) {
+		fscanf(tracker, " %d", &k);
 		if(k == 0) {
-			stock.current_stock();
+			current_stock();
 		} else if (k > 0) {
-			stock.add_stock(k);
+			add_stock(k);
 		} else {
-			stock.sell(-k);
+			sell(-k);
 		}
 	}
-	fclose(stock.tracker);
+	fclose(tracker);
 }
 
 void list::add_stock(int size){	
