@@ -5,6 +5,7 @@
 struct list{
 	node *head; // pointer to the shoe node with smallest size
 	FILE *tracker;
+	const char *filename;
 	int nodecount; // count of currently available nodes
 	void create(); // creates stock list
 	void add_stock(int size); // adds a pair of shoe to the stock list

@@ -8,7 +8,12 @@ using namespace std;
 
 list stock; //create a Linked List called stock
 
-int main () {
+int main (int argc, char * argv[]) {
+	if (argc > 1) {
+		stock.filename = argv[1];
+	} else {
+		stock.filename = "input.txt";
+	}
 	stock.create(); // initialize some variables
 	stock.open_file(); // opens file
 	stock.read_file(); // reads and closes file
@@ -16,13 +21,13 @@ int main () {
 	return EXIT_SUCCESS;
 }
 
-void list::create() {
+void list::create () {
 	head = NULL;
 	nodecount = 0;
 }
 
 void list::open_file () {
-	tracker = fopen("input.txt", "r+");
+	tracker = fopen(filename, "r+");
 	if(!tracker){
 		cerr << "Error: Unable to read file" << endl;
 		exit(EXIT_FAILURE);
