@@ -56,14 +56,14 @@ void list::add_stock(int size){
 		traverse = head;
 		while(traverse){
 			if (traverse->size == size) {
-				traverse->quant++; // increase quantity by 1 of a shoe that is already in stock
+				traverse->quant++; // increase quantity by 1 of a shoe size that is already in stock
 				return;
 			} else if (traverse->size > size) {
-				node *newnode = new node; // add a node for a shoe that is not available in stock
+				node *newnode = new node; // add a node for a shoe size that is not available in stock
 				newnode->size = size;
 				newnode->quant = 1;
 				if(tail) {
-					tail->next = newnode; // if tail points to something, make it point to recently inserted node
+					tail->next = newnode; // if tail points to something, then there is a smaller shoe size in stock
 				} else {
 					head = newnode; // if tail is NULL, then this node is the smallest shoe size
 				}
