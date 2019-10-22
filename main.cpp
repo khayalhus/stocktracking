@@ -27,7 +27,7 @@ void list::create () {
 }
 
 void list::open_file () {
-	tracker = fopen(filename, "r+");
+	tracker = fopen(filename, "r"); // open the file in reading mode
 	if(!tracker){
 		cerr << "Error: Unable to read file" << endl;
 		exit(EXIT_FAILURE);
