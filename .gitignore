@@ -1,4 +1,10 @@
-ipch/*.opendb
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
 .vs/VSWorkspaceState.json
 .vs/stocktracking/v16/Browse.VC.db
 .vs/stocktracking/v16/.suo
